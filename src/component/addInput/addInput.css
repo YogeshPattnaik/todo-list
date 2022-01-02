@@ -1,0 +1,10 @@
+.form-floating > .form-control {
+  padding: 0 !important;
+  height: 30px !important;
+}
+
+.btn {
+  margin-left: 5px !important;
+  padding: 0 10px !important;
+  height: 30px !important;
+}
