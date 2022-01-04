@@ -5,6 +5,8 @@ import TableList from "../TableList/TableList.js";
 
 const Content = () => {
   const [todoList, setTodoList] = useState([]);
+  const [inputData, setInputData] = useState("");
+  const [isEdit, setIsEdit] = useState();
 
   const fetchList = async () => {
     let result = await axios.get("http://localhost:8000/list");
@@ -21,8 +23,19 @@ const Content = () => {
     <div className="justify-content-center mx-auto my-auto w-75">
       <div className="card border-0 border-radius-20 my-4">
         <div className="card-body">
-          <AddInput todoList={todoList} setTodoList={setTodoList} />
-          <TableList todoList={todoList} setTodoList={setTodoList} />
+          <AddInput
+            todoList={todoList}
+            setTodoList={setTodoList}
+            inputData={inputData}
+            setInputData={setInputData}
+            isEdit={isEdit}
+          />
+          <TableList
+            todoList={todoList}
+            setTodoList={setTodoList}
+            setInputData={setInputData}
+            setIsEdit={setIsEdit}
+          />
         </div>
       </div>
     </div>

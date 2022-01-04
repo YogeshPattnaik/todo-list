@@ -2,8 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import "./addInput.css";
 const AddInput = (props) => {
-  const { setTodoList } = props;
-  const [inputData, setInputData] = useState("");
+  const { setTodoList, inputData, setInputData, isEdit } = props;
   const [error, setError] = useState("");
 
   const handleInputChange = (e) => {
@@ -21,8 +20,17 @@ const AddInput = (props) => {
       name: inputData,
     };
 
-    await axios.post("http://localhost:8000/list", body);
+    if (isEdit) {
+      await axios.put(`http://localhost:8000/list/${isEdit}`, body);
+    } else {
+      await axios.post("http://localhost:8000/list", body);
+    }
 
+    if (isEdit) {
+      setTodoList((prev) =>
+        prev.map((item) => (item.id === isEdit ? { ...body } : item))
+      );
+    }
     setTodoList((prev) => [...prev, body]);
 
     setInputData("");
@@ -50,7 +58,7 @@ const AddInput = (props) => {
             type="submit"
             onClick={(e) => handleSubmit(e)}
           >
-            Add
+            {isEdit ? "Update" : "Add"}
           </button>
         </div>
       </div>

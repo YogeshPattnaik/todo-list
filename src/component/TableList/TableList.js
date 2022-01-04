@@ -2,11 +2,18 @@ import axios from "axios";
 import React from "react";
 
 const TableList = (props) => {
-  const { todoList, setTodoList } = props;
+  const { todoList, setTodoList, setInputData, setIsEdit } = props;
 
   const deleteTask = async (id) => {
     await axios.delete(`http://localhost:8000/list/${id}`);
     setTodoList(todoList.filter((item) => item.id !== id));
+  };
+
+  const editTask = (id) => {
+    const editItem = todoList.find((item) => item.id === id);
+    console.log(editItem);
+    setInputData(editItem.name);
+    setIsEdit(id);
   };
 
   return (
@@ -34,6 +41,16 @@ const TableList = (props) => {
                 <td>{sNo}</td>
                 <td>{name}</td>
                 <td>
+                  <i
+                    className="fa fa-edit"
+                    style={{
+                      fontSize: 36,
+                      color: "green",
+                      cursor: "pointer",
+                      marginRight: 4,
+                    }}
+                    onClick={() => editTask(id)}
+                  ></i>
                   <i
                     className="fa fa-trash-o"
                     style={{ fontSize: 36, color: "red", cursor: "pointer" }}
