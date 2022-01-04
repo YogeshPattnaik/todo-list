@@ -2,7 +2,8 @@ import axios from "axios";
 import React, { useState } from "react";
 import "./addInput.css";
 const AddInput = (props) => {
-  const { setTodoList, inputData, setInputData, isEdit } = props;
+  const { setTodoList, inputData, setInputData, isEdit, toast, setIsEdit } =
+    props;
   const [error, setError] = useState("");
 
   const handleInputChange = (e) => {
@@ -30,8 +31,12 @@ const AddInput = (props) => {
       setTodoList((prev) =>
         prev.map((item) => (item.id === isEdit ? { ...body } : item))
       );
+      toast.success("Task updated successfully");
+      setIsEdit("");
+    } else {
+      setTodoList((prev) => [...prev, body]);
+      toast.success("Task added successfully");
     }
-    setTodoList((prev) => [...prev, body]);
 
     setInputData("");
   };
